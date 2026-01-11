@@ -81,12 +81,29 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/instagram', instagramRoutes);
 
+// Root route - important for Render health checks
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Tabakh Dziri API is running',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      products: '/api/products',
+      orders: '/api/orders',
+      admin: '/api/admin'
+    }
+  });
+});
+
 // Health check route
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     success: true,
     message: 'Tabakh Dziri API is running',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    database: 'connected'
   });
 });
 
@@ -119,8 +136,12 @@ app.use((err, req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+const HOST = process.env.HOST || '0.0.0.0'; // Important for Render
+
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 Server running on ${HOST}:${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV}`);
   console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL}`);
+  console.log(`💾 Database: ${process.env.MONGODB_URI ? 'Connected' : 'Not configured'}`);
+  console.log(`✅ Server is ready to accept connections`);
 });

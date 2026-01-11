@@ -1,44 +1,58 @@
-# Tabakh Dziri Backend API 🍽️
+# 🍽️ Tabakh Dziri - Backend API
 
-Complete Node.js + Express + MongoDB backend for Tabakh Dziri food delivery service with JWT authentication.
+Backend API لتطبيق توصيل الطعام "طباخ دزيري" مبني باستخدام Node.js، Express، و MongoDB.
 
-## 📋 Features
+## 🚀 التقنيات المستخدمة
 
-- ✅ User authentication (Register/Login) with JWT
-- ✅ Password hashing with bcrypt
-- ✅ Protected routes requiring authentication
-- ✅ Full CRUD operations for orders
-- ✅ Email notifications (Welcome & Order confirmation)
-- ✅ Role-based access control (User/Admin)
-- ✅ MongoDB integration
-- ✅ CORS enabled for Next.js frontend
+- **Node.js** - بيئة تشغيل JavaScript
+- **Express** - إطار عمل خادم الويب
+- **MongoDB** - قاعدة البيانات
+- **Mongoose** - ODM للتعامل مع MongoDB
+- **JWT** - المصادقة والتوثيق
+- **Bcrypt** - تشفير كلمات المرور
+- **Multer** - رفع الملفات
 
-## 🚀 Quick Start
+## 📋 المتطلبات
 
-### 1. Install Dependencies
+- Node.js >= 18.0.0
+- npm >= 9.0.0
+- MongoDB Atlas account
 
+## ⚙️ التثبيت المحلي
+
+1. **استنساخ المشروع:**
 ```bash
+git clone <repository-url>
 cd food-delivery-backend
+```
+
+2. **تثبيت Dependencies:**
+```bash
 npm install
 ```
 
-### 2. Configure Environment Variables
+3. **إعداد Environment Variables:**
 
-Edit `.env` file and add your Gmail app password:
-
-```env
-EMAIL_PASS=your_gmail_app_password_here
+انسخ `.env.example` إلى `.env`:
+```bash
+cp .env.example .env
 ```
 
-**How to get Gmail App Password:**
-1. Go to Google Account → Security
-2. Enable 2-Step Verification
-3. Go to App Passwords
-4. Generate password for "Mail"
-5. Copy and paste in `.env`
+قم بتعبئة القيم المطلوبة في `.env`:
+```env
+NODE_ENV=development
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/tabakh-dziri?retryWrites=true&w=majority
+JWT_SECRET=your-super-secret-jwt-key-minimum-32-characters-long
+FRONTEND_URL=http://localhost:3000
+```
 
-### 3. Start the Server
+4. **التحقق من Environment Variables:**
+```bash
+npm run check-env
+```
 
+5. **تشغيل السيرفر:**
 ```bash
 # Development mode with auto-reload
 npm run dev
@@ -47,371 +61,213 @@ npm run dev
 npm start
 ```
 
-Server will run on: `http://localhost:5000`
+## 🌐 نشر على Render
 
-## 📁 Project Structure
+### الخطوة 1: التحضير
 
+تأكد من اكتمال كل هذه النقاط:
+- [x] جميع التعديلات مرفوعة على GitHub
+- [x] ملف `.env` **غير مرفوع** على GitHub (محمي بـ `.gitignore`)
+- [x] المشروع يعمل محلياً بدون مشاكل
+
+### الخطوة 2: إنشاء Web Service على Render
+
+1. اذهب إلى [Render Dashboard](https://dashboard.render.com/)
+2. انقر على **"New"** → **"Web Service"**
+3. اربط حساب GitHub الخاص بك
+4. اختر repository المشروع
+
+### الخطوة 3: إعدادات Render
+
+#### Basic Settings:
+- **Name:** `tabakh-dziri-backend`
+- **Environment:** `Node`
+- **Region:** اختر الأقرب (Frankfurt أو Amsterdam)
+- **Branch:** `main`
+- **Root Directory:** `food-delivery-backend` ⚠️ **مهم جداً!**
+
+#### Build & Deploy:
+- **Build Command:** `npm install`
+- **Start Command:** `npm start`
+- **Auto-Deploy:** `Yes` (لإعادة النشر تلقائياً عند push)
+
+#### Environment Variables:
+
+أضف المتغيرات التالية واحدة تلو الأخرى:
+
+| Key | Value | ملاحظات |
+|-----|-------|---------|
+| `NODE_ENV` | `production` | بيئة الإنتاج |
+| `PORT` | `10000` | Render يعين هذا تلقائياً |
+| `MONGODB_URI` | `mongodb+srv://...` | من MongoDB Atlas |
+| `JWT_SECRET` | `your-secret-32+chars` | يجب أن يكون 32+ حرف |
+| `FRONTEND_URL` | `https://your-app.vercel.app` | رابط Frontend |
+
+### الخطوة 4: MongoDB Atlas
+
+1. اذهب إلى [MongoDB Atlas](https://cloud.mongodb.com/)
+2. **Network Access** → **Add IP Address**
+3. اختر **"Allow Access from Anywhere"** (`0.0.0.0/0`)
+4. أو أضف IP الخاص بـ Render (يظهر في الـ logs)
+
+### الخطوة 5: التحقق من النشر
+
+بعد النشر، اختبر الروابط التالية:
+
+#### 1. Root Route:
 ```
-food-delivery-backend/
-├── config/
-│   └── db.js              # MongoDB connection
-├── controllers/
-│   ├── authController.js  # Authentication logic
-│   ├── orderController.js # Order CRUD operations
-│   └── userController.js  # User profile management
-├── middleware/
-│   └── auth.js            # JWT verification & authorization
-├── models/
-│   ├── User.js            # User schema
-│   └── Order.js           # Order schema
-├── routes/
-│   ├── authRoutes.js      # Auth endpoints
-│   ├── orderRoutes.js     # Order endpoints
-│   └── userRoutes.js      # User endpoints
-├── utils/
-│   └── emailService.js    # Email sending functions
-├── .env                   # Environment variables
-├── .gitignore
-├── package.json
-├── server.js              # Main entry point
-└── README.md
+https://your-app-name.onrender.com/
+```
+✅ يجب أن يعرض:
+```json
+{
+  "success": true,
+  "message": "Tabakh Dziri API is running",
+  "version": "1.0.0",
+  "endpoints": { ... }
+}
 ```
 
-## 🔌 API Endpoints
+#### 2. Health Check:
+```
+https://your-app-name.onrender.com/api/health
+```
+✅ يجب أن يعرض:
+```json
+{
+  "success": true,
+  "message": "Tabakh Dziri API is running",
+  "timestamp": "2026-01-11T...",
+  "database": "connected"
+}
+```
+
+#### 3. Test Products API:
+```
+https://your-app-name.onrender.com/api/products
+```
+
+## 📊 API Endpoints
 
 ### Authentication
+- `POST /api/auth/register` - تسجيل مستخدم جديد
+- `POST /api/auth/login` - تسجيل الدخول
+- `GET /api/auth/me` - الحصول على بيانات المستخدم الحالي
 
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| POST | `/api/auth/register` | Public | Register new user |
-| POST | `/api/auth/login` | Public | Login user |
-| GET | `/api/auth/me` | Private | Get current user |
+### Products
+- `GET /api/products` - الحصول على جميع المنتجات
+- `GET /api/products/:id` - الحصول على منتج معين
+- `POST /api/products` - إضافة منتج جديد (Admin only)
+- `PUT /api/products/:id` - تحديث منتج (Admin only)
+- `DELETE /api/products/:id` - حذف منتج (Admin only)
+
+### Categories
+- `GET /api/categories` - الحصول على جميع الفئات
+- `POST /api/categories` - إضافة فئة جديدة (Admin only)
 
 ### Orders
+- `GET /api/orders` - الحصول على الطلبات
+- `POST /api/orders` - إنشاء طلب جديد
+- `PATCH /api/orders/:id/status` - تحديث حالة الطلب (Admin only)
 
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| POST | `/api/orders` | Private | Create order (requires login) |
-| GET | `/api/orders` | Private | Get my orders |
-| GET | `/api/orders/:id` | Private | Get single order |
-| PUT | `/api/orders/:id` | Private | Update order |
-| DELETE | `/api/orders/:id` | Private | Delete order |
-| GET | `/api/orders/all/orders` | Admin | Get all orders (admin) |
-| PATCH | `/api/orders/:id/status` | Admin | Update order status (admin) |
+### Admin
+- `GET /api/admin/stats` - إحصائيات لوحة التحكم
+- `GET /api/admin/users` - الحصول على جميع المستخدمين
+- `GET /api/admin/orders` - الحصول على جميع الطلبات
 
-### Users
+### Contact
+- `POST /api/contact` - إرسال رسالة
+- `GET /api/contact` - الحصول على الرسائل (Admin only)
 
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/api/users/profile` | Private | Get user profile |
-| PUT | `/api/users/profile` | Private | Update user profile |
-| GET | `/api/users` | Admin | Get all users (admin) |
+### Reviews
+- `GET /api/reviews/:productId` - الحصول على تقييمات منتج
+- `POST /api/reviews` - إضافة تقييم جديد
 
-## 💻 Frontend Integration Examples
+## 🐛 استكشاف الأخطاء
 
-### 1. API Client Setup
+### 503 Service Unavailable
 
-Create `lib/api.js` in your Next.js frontend:
+**الأسباب المحتملة:**
+1. ❌ Root Directory غير صحيح في Render
+2. ❌ Start Command غير صحيح
+3. ❌ السيرفر لا يستمع على `0.0.0.0`
+4. ❌ Environment Variables ناقصة
 
-```javascript
-import axios from 'axios';
+**الحل:**
+- تأكد من Root Directory = `food-delivery-backend`
+- تأكد من Start Command = `npm start`
+- راجع الـ Logs في Render Dashboard
 
-const API_URL = 'http://localhost:5000/api';
+### Database Connection Error
 
-// Create axios instance
-const api = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json'
-    }
-});
+**الأسباب المحتملة:**
+1. ❌ `MONGODB_URI` غير صحيح
+2. ❌ MongoDB Atlas لا يسمح بالاتصال من Render
+3. ❌ Username/Password خاطئ في Connection String
 
-// Add token to requests
-api.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
+**الحل:**
+- تحقق من `MONGODB_URI` في Render Environment Variables
+- أضف `0.0.0.0/0` في Network Access على MongoDB Atlas
+- تأكد من صحة البيانات في Connection String
 
-export default api;
+### CORS Errors
+
+**الحل:**
+- تأكد من إضافة `FRONTEND_URL` في Environment Variables
+- تأكد من أن Frontend URL يبدأ بـ `https://`
+
+## 📝 ملاحظات مهمة
+
+### ⚠️ Cold Start (Free Plan)
+- Render يوقف الخدمة بعد 15 دقيقة من عدم النشاط
+- أول طلب بعد التوقف قد يستغرق 30-60 ثانية
+- هذا أمر طبيعي في Free Plan
+
+### 🔒 الأمان
+- ✅ لا تشارك ملف `.env` أبداً
+- ✅ استخدم JWT Secrets طويلة (32+ حرف)
+- ✅ MongoDB Atlas: أضف IP filtering في Production
+- ✅ استخدم HTTPS دائماً في Production
+
+### 📊 Monitoring
+- راقب الـ Logs في Render بانتظام
+- راقب استهلاك Database في MongoDB Atlas
+- تحقق من Health Check بشكل دوري
+
+## 🛠️ Scripts المتاحة
+
+```bash
+# تشغيل السيرفر (Production)
+npm start
+
+# تشغيل السيرفر (Development with auto-reload)
+npm run dev
+
+# التحقق من Environment Variables
+npm run check-env
 ```
 
-### 2. Register User
+## 📚 الملفات المهمة
 
-```javascript
-import api from '@/lib/api';
+- `RENDER_DEPLOYMENT.md` - دليل شامل للنشر على Render
+- `DEPLOYMENT_CHECKLIST.md` - قائمة تحقق خطوة بخطوة
+- `.env.example` - نموذج Environment Variables
+- `check-env.js` - سكريبت للتحقق من المتغيرات
 
-const handleRegister = async (userData) => {
-    try {
-        const response = await api.post('/auth/register', {
-            name: userData.name,
-            email: userData.email,
-            password: userData.password,
-            phone: userData.phone
-        });
-        
-        // Save token
-        localStorage.setItem('token', response.data.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.data.user));
-        
-        console.log('Registration successful:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Registration error:', error.response?.data?.message);
-        throw error;
-    }
-};
-```
+## 📞 الدعم
 
-### 3. Login User
+إذا واجهت أي مشاكل:
+1. راجع `RENDER_DEPLOYMENT.md`
+2. استخدم `DEPLOYMENT_CHECKLIST.md`
+3. شغّل `npm run check-env` للتحقق
+4. تحقق من Render Logs
+5. تحقق من MongoDB Atlas Logs
 
-```javascript
-import api from '@/lib/api';
+## 📄 الترخيص
 
-const handleLogin = async (email, password) => {
-    try {
-        const response = await api.post('/auth/login', {
-            email,
-            password
-        });
-        
-        // Save token
-        localStorage.setItem('token', response.data.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.data.user));
-        
-        console.log('Login successful:', response.data);
-        return response.data;
-    } catch (error) {
-        console.error('Login error:', error.response?.data?.message);
-        throw error;
-    }
-};
-```
-
-### 4. Create Order (Protected Route)
-
-```javascript
-import api from '@/lib/api';
-
-const handleCreateOrder = async (orderData) => {
-    try {
-        // Check if user is logged in
-        const token = localStorage.getItem('token');
-        if (!token) {
-            alert('Please login to place an order');
-            window.location.href = '/login';
-            return;
-        }
-        
-        const response = await api.post('/orders', {
-            customerInfo: {
-                firstName: orderData.firstName,
-                lastName: orderData.lastName,
-                phone: orderData.phone,
-                email: orderData.email
-            },
-            items: orderData.items, // Cart items
-            eventDetails: {
-                wilaya: orderData.wilaya,
-                location: orderData.location,
-                date: orderData.date,
-                time: orderData.time
-            },
-            totalAmount: orderData.totalAmount,
-            notes: orderData.notes
-        });
-        
-        console.log('Order created:', response.data);
-        return response.data;
-    } catch (error) {
-        if (error.response?.status === 401) {
-            alert('Session expired. Please login again.');
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = '/login';
-        }
-        console.error('Order creation error:', error.response?.data?.message);
-        throw error;
-    }
-};
-```
-
-### 5. Get User Orders
-
-```javascript
-import api from '@/lib/api';
-
-const fetchMyOrders = async () => {
-    try {
-        const response = await api.get('/orders');
-        console.log('My orders:', response.data);
-        return response.data.data;
-    } catch (error) {
-        console.error('Error fetching orders:', error.response?.data?.message);
-        throw error;
-    }
-};
-```
-
-### 6. Logout User
-
-```javascript
-const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = '/';
-};
-```
-
-### 7. Check if User is Logged In
-
-```javascript
-const isAuthenticated = () => {
-    const token = localStorage.getItem('token');
-    return !!token;
-};
-
-const getCurrentUser = () => {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-};
-```
-
-## 🔐 Authentication Flow
-
-1. **User Registration:**
-   - User fills registration form
-   - Frontend sends data to `/api/auth/register`
-   - Backend creates user, hashes password, sends welcome email
-   - Returns JWT token
-   - Frontend stores token in localStorage
-
-2. **User Login:**
-   - User enters email/password
-   - Frontend sends to `/api/auth/login`
-   - Backend verifies credentials
-   - Returns JWT token
-   - Frontend stores token in localStorage
-
-3. **Protected Requests:**
-   - User tries to create order
-   - Frontend includes token in Authorization header
-   - Backend verifies token in middleware
-   - If valid, processes request
-   - If invalid/missing, returns 401 error
-
-## 📧 Email Configuration
-
-The system sends two types of emails:
-
-1. **Welcome Email** - Sent when user registers
-2. **Order Confirmation** - Sent when order is created
-
-Emails are sent to: `tabakhdziri@gmail.com`
-
-## 🛡️ Security Features
-
-- ✅ Password hashing with bcrypt (10 rounds)
-- ✅ JWT token expiration (7 days)
-- ✅ Protected routes requiring authentication
-- ✅ Role-based authorization (User/Admin)
-- ✅ Input validation
-- ✅ CORS configuration
-- ✅ Environment variables for sensitive data
-
-## 🧪 Testing the API
-
-### Using Postman or Thunder Client:
-
-1. **Register:**
-```json
-POST http://localhost:5000/api/auth/register
-{
-    "name": "John Doe",
-    "email": "john@example.com",
-    "password": "123456",
-    "phone": "0555123456"
-}
-```
-
-2. **Login:**
-```json
-POST http://localhost:5000/api/auth/login
-{
-    "email": "john@example.com",
-    "password": "123456"
-}
-```
-
-3. **Create Order (add token in Authorization header):**
-```json
-POST http://localhost:5000/api/orders
-Headers: Authorization: Bearer YOUR_JWT_TOKEN
-{
-    "customerInfo": {
-        "firstName": "John",
-        "lastName": "Doe",
-        "phone": "0555123456"
-    },
-    "items": [
-        {
-            "dishId": "1",
-            "name": "Couscous",
-            "quantity": 50,
-            "price": 500
-        }
-    ],
-    "eventDetails": {
-        "wilaya": "Alger",
-        "location": "Hotel Hilton",
-        "date": "2024-06-15",
-        "time": "18:00"
-    },
-    "totalAmount": 25000
-}
-```
-
-## ⚠️ Important Notes
-
-1. **Orders require authentication** - Users must be logged in to create orders
-2. **Token expiration** - Tokens expire after 7 days
-3. **Email password** - Update EMAIL_PASS in `.env` with your Gmail app password
-4. **MongoDB connection** - Already configured with your connection string
-5. **CORS** - Configured for `http://localhost:3000` (Next.js frontend)
-
-## 🔧 Environment Variables Reference
-
-```env
-PORT=5000
-NODE_ENV=development
-MONGODB_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
-JWT_EXPIRE=7d
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=tabakhdziri@gmail.com
-EMAIL_PASS=your_gmail_app_password
-EMAIL_FROM=Tabakh Dziri <tabakhdziri@gmail.com>
-FRONTEND_URL=http://localhost:3000
-```
-
-## 📝 Next Steps
-
-1. Install dependencies: `npm install`
-2. Configure Gmail app password in `.env`
-3. Start server: `npm run dev`
-4. Test endpoints with Postman/Thunder Client
-5. Integrate with Next.js frontend
-6. Create login/register pages in frontend
-7. Protect cart checkout with authentication
+MIT License - Tabakh Dziri © 2026
 
 ---
 
-**Made with ❤️ for Tabakh Dziri**
+**آخر تحديث:** 2026-01-11
+**النسخة:** 1.0.0
