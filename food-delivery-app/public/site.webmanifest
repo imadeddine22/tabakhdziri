@@ -1,0 +1,30 @@
+{
+    "name": "Tabakh Dziri - Traiteur Professionnel",
+    "short_name": "Tabakh Dziri",
+    "description": "Traiteur professionnel pour vos mariages et événements spéciaux en Algérie",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#1a5f3f",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/favicon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/favicon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "food",
+        "business"
+    ],
+    "lang": "fr-DZ",
+    "dir": "ltr"
+}
