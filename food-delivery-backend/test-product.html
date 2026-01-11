@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Product Creation</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>اختبار إنشاء منتج</h1>
+    
+    <form id="productForm">
+        <div>
+            <label>اسم المنتج:</label>
+            <input type="text" name="name" value="منتج تجريبي" required>
+        </div>
+        <div>
+            <label>الوصف:</label>
+            <textarea name="description" required>وصف المنتج التجريبي</textarea>
+        </div>
+        <div>
+            <label>السعر:</label>
+            <input type="number" name="price" value="1000" required>
+        </div>
+        <div>
+            <label>معرف الفئة:</label>
+            <input type="text" name="category" value="" placeholder="أدخل معرف الفئة" required>
+        </div>
+        <div>
+            <label>المخزون:</label>
+            <input type="number" name="stock" value="100" required>
+        </div>
+        <div>
+            <label>الصورة:</label>
+            <input type="file" name="image" accept="image/*">
+        </div>
+        <div>
+            <label>متوفر:</label>
+            <input type="checkbox" name="isAvailable" checked>
+        </div>
+        <button type="submit">إنشاء المنتج</button>
+    </form>
+
+    <h2>النتيجة:</h2>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const token = prompt('أدخل التوكن (Token):');
+            
+            try {
+                console.log('🔄 إرسال الطلب...');
+                
+                const response = await fetch('http://localhost:5000/api/products', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                console.log('📊 الحالة:', response.status);
+                const data = await response.json();
+                console.log('📦 البيانات:', data);
+                
+                document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+                
+                if (response.ok) {
+                    alert('✅ تم إنشاء المنتج بنجاح!');
+                } else {
+                    alert('❌ فشل: ' + data.message);
+                }
+            } catch (error) {
+                console.error('❌ خطأ:', error);
+                document.getElementById('result').textContent = 'خطأ: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

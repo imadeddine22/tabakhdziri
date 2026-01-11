@@ -1,0 +1,190 @@
+[
+    {
+        "id": 1,
+        "name": "Chowai Siam - شواي السطايفي - Staifi Grill",
+        "cuisine": "Grillades",
+        "category": "Traditionnelle",
+        "rating": 4.5,
+        "deliveryTime": "30-45 min",
+        "deliveryFee": "200 DA",
+        "minOrder": "1000 DA",
+        "featured": true,
+        "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
+        "address": "Alger Centre, Algérie",
+        "phone": "+213 555 123 456",
+        "menu": [
+            {
+                "id": 101,
+                "name": "Brochette Mixte",
+                "description": "Brochettes de viande et poulet grillées",
+                "price": 800,
+                "image": "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400&q=80",
+                "category": "Grillades"
+            },
+            {
+                "id": 102,
+                "name": "Couscous Traditionnel",
+                "description": "Couscous avec légumes et viande",
+                "price": 1200,
+                "image": "https://images.unsplash.com/photo-1574484284002-952d92456975?w=400&q=80",
+                "category": "Plats"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "El Kahina",
+        "cuisine": "Cuisine Algérienne",
+        "category": "Traditionnelle",
+        "rating": 4.7,
+        "deliveryTime": "25-40 min",
+        "deliveryFee": "150 DA",
+        "minOrder": "800 DA",
+        "featured": true,
+        "image": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+        "address": "Bab Ezzouar, Alger",
+        "phone": "+213 555 234 567",
+        "menu": [
+            {
+                "id": 201,
+                "name": "Tajine Poulet",
+                "description": "Tajine de poulet aux olives",
+                "price": 950,
+                "image": "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80",
+                "category": "Plats"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Kunafa Palace - قصر الكنافة",
+        "cuisine": "Pâtisserie Orientale",
+        "category": "Desserts",
+        "rating": 4.8,
+        "deliveryTime": "20-30 min",
+        "deliveryFee": "100 DA",
+        "minOrder": "500 DA",
+        "featured": true,
+        "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80",
+        "address": "Hussein Dey, Alger",
+        "phone": "+213 555 345 678",
+        "menu": [
+            {
+                "id": 301,
+                "name": "Kunafa Fromage",
+                "description": "Kunafa traditionnelle au fromage",
+                "price": 600,
+                "image": "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400&q=80",
+                "category": "Desserts"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Akak Grill El Bahdja",
+        "cuisine": "Grillades & Viandes",
+        "category": "Grillades",
+        "rating": 4.6,
+        "deliveryTime": "35-50 min",
+        "deliveryFee": "250 DA",
+        "minOrder": "1200 DA",
+        "featured": true,
+        "image": "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=800&q=80",
+        "address": "Cheraga, Alger",
+        "phone": "+213 555 456 789",
+        "menu": []
+    },
+    {
+        "id": 5,
+        "name": "Atyab Sandwich",
+        "cuisine": "Fast Food",
+        "category": "Fast food",
+        "rating": 4.3,
+        "deliveryTime": "15-25 min",
+        "deliveryFee": "100 DA",
+        "minOrder": "400 DA",
+        "featured": true,
+        "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+        "address": "Kouba, Alger",
+        "phone": "+213 555 567 890",
+        "menu": []
+    },
+    {
+        "id": 6,
+        "name": "Factory's",
+        "cuisine": "Burgers & Frites",
+        "category": "Burgers",
+        "rating": 4.4,
+        "deliveryTime": "20-35 min",
+        "deliveryFee": "150 DA",
+        "minOrder": "600 DA",
+        "featured": false,
+        "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&q=80",
+        "address": "Hydra, Alger",
+        "phone": "+213 555 678 901",
+        "menu": [
+            {
+                "id": 601,
+                "name": "Factory Burger",
+                "description": "Burger signature avec frites",
+                "price": 750,
+                "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80",
+                "category": "Burgers"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "La Fabrik",
+        "cuisine": "Cuisine Moderne",
+        "category": "Internationale",
+        "rating": 4.5,
+        "deliveryTime": "30-45 min",
+        "deliveryFee": "200 DA",
+        "minOrder": "1000 DA",
+        "featured": false,
+        "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+        "address": "Ben Aknoun, Alger",
+        "phone": "+213 555 789 012",
+        "menu": []
+    },
+    {
+        "id": 8,
+        "name": "Rouad El Andalous",
+        "cuisine": "Cuisine Marocaine",
+        "category": "Traditionnelle",
+        "rating": 4.6,
+        "deliveryTime": "35-50 min",
+        "deliveryFee": "200 DA",
+        "minOrder": "1100 DA",
+        "featured": false,
+        "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
+        "address": "Dely Ibrahim, Alger",
+        "phone": "+213 555 890 123",
+        "menu": []
+    },
+    {
+        "id": 9,
+        "name": "Californian Spot",
+        "cuisine": "Pizza & Burgers",
+        "category": "Pizza",
+        "rating": 4.2,
+        "deliveryTime": "25-40 min",
+        "deliveryFee": "150 DA",
+        "minOrder": "700 DA",
+        "featured": false,
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80",
+        "address": "Birkhadem, Alger",
+        "phone": "+213 555 901 234",
+        "menu": [
+            {
+                "id": 901,
+                "name": "Pizza Margherita",
+                "description": "Pizza classique tomate mozzarella",
+                "price": 850,
+                "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80",
+                "category": "Pizza"
+            }
+        ]
+    }
+]

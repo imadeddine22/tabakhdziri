@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "Traditionnelle",
+        "image": "/images/categories/traditionnelle.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Grillades",
+        "image": "/images/categories/grillades.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Pâtisserie",
+        "image": "/images/categories/patisserie.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Entrées",
+        "image": "/images/categories/entrees.jpg"
+    },
+    {
+        "id": 5,
+        "name": "Salades",
+        "image": "/images/categories/salades.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Soupes",
+        "image": "/images/categories/soupes.jpg"
+    },
+    {
+        "id": 7,
+        "name": "Desserts",
+        "image": "/images/categories/desserts.jpg"
+    },
+    {
+        "id": 8,
+        "name": "Boissons",
+        "image": "/images/categories/boissons.jpg"
+    }
+]

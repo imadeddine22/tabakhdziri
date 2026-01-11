@@ -1,0 +1,249 @@
+import axios from 'axios';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+
+// Log the API URL for debugging
+if (typeof window !== 'undefined') {
+    console.log('🔗 API URL:', API_URL);
+}
+
+// Create axios instance with timeout
+const api = axios.create({
+    baseURL: API_URL,
+    timeout: 10000, // 10 second timeout
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    // Ensure credentials are included for CORS
+    withCredentials: false
+});
+
+// Add token to requests automatically
+api.interceptors.request.use(
+    (config) => {
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('token');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// Handle response errors
+api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Token expired or invalid
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/login';
+            }
+        }
+        return Promise.reject(error);
+    }
+);
+
+// Auth API
+export const authAPI = {
+    // Register new user
+    register: async (userData) => {
+        try {
+            console.log('📤 Sending registration request to:', `${API_URL}/auth/register`);
+            console.log('📦 User data:', { ...userData, password: '***' }); // Don't log password
+            
+            const response = await api.post('/auth/register', userData);
+            
+            console.log('✅ Registration successful:', response.data);
+            return response.data;
+        } catch (error) {
+            // Enhanced error logging
+            console.error('❌ Registration error:', {
+                message: error.message,
+                code: error.code,
+                response: error.response?.data,
+                status: error.response?.status
+            });
+            
+            // Provide helpful error messages
+            if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+                throw new Error('Cannot connect to server. Please ensure the backend is running on http://localhost:5000');
+            }
+            
+            if (error.code === 'ECONNABORTED') {
+                throw new Error('Request timeout. The server took too long to respond.');
+            }
+            
+            throw error;
+        }
+    },
+
+    // Login user
+    login: async (email, password) => {
+        try {
+            console.log('📤 Sending login request to:', `${API_URL}/auth/login`);
+            const response = await api.post('/auth/login', { email, password });
+            console.log('✅ Login successful');
+            return response.data;
+        } catch (error) {
+            console.error('❌ Login error:', error.response?.data || error.message);
+            
+            if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+                throw new Error('Cannot connect to server. Please ensure the backend is running.');
+            }
+            
+            throw error;
+        }
+    },
+
+    // Get current user
+    getMe: async () => {
+        const response = await api.get('/auth/me');
+        return response.data;
+    },
+
+    // Logout (client-side only)
+    logout: () => {
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/';
+        }
+    }
+};
+
+// Orders API
+export const ordersAPI = {
+    // Create new order (requires authentication)
+    create: async (orderData) => {
+        const response = await api.post('/orders', orderData);
+        return response.data;
+    },
+
+    // Get my orders
+    getMyOrders: async () => {
+        const response = await api.get('/orders');
+        return response.data;
+    },
+
+    // Get single order
+    getById: async (orderId) => {
+        const response = await api.get(`/orders/${orderId}`);
+        return response.data;
+    },
+
+    // Update order
+    update: async (orderId, orderData) => {
+        const response = await api.put(`/orders/${orderId}`, orderData);
+        return response.data;
+    },
+
+    // Delete order
+    delete: async (orderId) => {
+        const response = await api.delete(`/orders/${orderId}`);
+        return response.data;
+    }
+};
+
+// User API
+export const userAPI = {
+    // Get user profile
+    getProfile: async () => {
+        const response = await api.get('/users/profile');
+        return response.data;
+    },
+
+    // Update user profile
+    updateProfile: async (userData) => {
+        const response = await api.put('/users/profile', userData);
+        return response.data;
+    }
+};
+
+// Helper functions
+export const isAuthenticated = () => {
+    if (typeof window !== 'undefined') {
+        const token = localStorage.getItem('token');
+        return !!token;
+    }
+    return false;
+};
+
+export const getCurrentUser = () => {
+    if (typeof window !== 'undefined') {
+        const user = localStorage.getItem('user');
+        return user ? JSON.parse(user) : null;
+    }
+    return null;
+};
+
+export const saveAuthData = (token, user) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+};
+
+// ============================================
+// Local Data Functions (for dishes & categories)
+// ============================================
+
+// Get all dishes from local data
+export const getDishes = async () => {
+    try {
+        const response = await fetch('/data/dishes.json');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching dishes:', error);
+        return [];
+    }
+};
+
+// Get all categories from local data
+export const getCategories = async () => {
+    try {
+        const response = await fetch('/data/categories.json');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        return [];
+    }
+};
+
+// Get a single dish/restaurant by ID from local data
+export const getRestaurant = async (id) => {
+    try {
+        const response = await fetch('/data/dishes.json');
+        const data = await response.json();
+        // Find the dish with the matching ID
+        const dish = data.find(d => d.id === id);
+        return dish || null;
+    } catch (error) {
+        console.error('Error fetching restaurant:', error);
+        return null;
+    }
+};
+
+// ============================================
+// Contact API
+// ============================================
+
+export const contactAPI = {
+    // Send contact message
+    sendMessage: async (contactData) => {
+        const response = await api.post('/contact', contactData);
+        return response.data;
+    }
+};
+
+
+
+export default api;
