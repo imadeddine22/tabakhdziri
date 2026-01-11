@@ -31,12 +31,14 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('📡 CORS Request from origin:', origin);
+    console.log('📡 NODE_ENV:', process.env.NODE_ENV);
+
     // في وضع التطوير، اقبل جميع المصادر
     if (process.env.NODE_ENV !== 'production') {
-      console.log('📡 CORS Request from origin:', origin);
       callback(null, true);
     } else {
-      // في وضع الإنتاج، تحقق من المص Source
+      // في وضع الإنتاج، تحقق من المصدر
       const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:3000'];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
@@ -45,7 +47,9 @@ app.use(cors({
       }
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
