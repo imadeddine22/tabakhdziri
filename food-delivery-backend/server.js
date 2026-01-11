@@ -134,14 +134,20 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start server
+// Start server (for local/Render deployment)
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || '0.0.0.0'; // Important for Render
+const HOST = process.env.HOST || '0.0.0.0';
 
-app.listen(PORT, HOST, () => {
-  console.log(`🚀 Server running on ${HOST}:${PORT}`);
-  console.log(`📍 Environment: ${process.env.NODE_ENV}`);
-  console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL}`);
-  console.log(`💾 Database: ${process.env.MONGODB_URI ? 'Connected' : 'Not configured'}`);
-  console.log(`✅ Server is ready to accept connections`);
-});
+// Only start server if not in Vercel serverless environment
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, HOST, () => {
+    console.log(`🚀 Server running on ${HOST}:${PORT}`);
+    console.log(`📍 Environment: ${process.env.NODE_ENV}`);
+    console.log(`🌐 Frontend URL: ${process.env.FRONTEND_URL}`);
+    console.log(`💾 Database: ${process.env.MONGODB_URI ? 'Connected' : 'Not configured'}`);
+    console.log(`✅ Server is ready to accept connections`);
+  });
+}
+
+// Export for Vercel serverless
+export default app;
