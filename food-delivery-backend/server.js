@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
+import fs from 'fs';
 
 // Import routes
 import authRoutes from './routes/authRoutes.js';
@@ -68,7 +69,15 @@ app.use((req, res, next) => {
 });
 
 // Serve static files
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+// Serve static files
+const uploadPath = path.join(__dirname, 'public/uploads');
+if (fs.existsSync(uploadPath)) {
+  app.use('/uploads', express.static(uploadPath));
+} else if (process.env.VERCEL !== '1') {
+  // إنشاء المجلد فقط إذا لم نكن في Vercel
+  fs.mkdirSync(uploadPath, { recursive: true });
+  app.use('/uploads', express.static(uploadPath));
+}
 
 // Routes
 app.use('/api/auth', authRoutes);
