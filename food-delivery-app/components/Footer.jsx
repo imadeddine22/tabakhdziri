@@ -100,7 +100,6 @@ export default function Footer() {
                             {[
                                 { href: '/', label: language === 'ar' ? 'الرئيسية' : 'Accueil' },
                                 { href: '/about', label: language === 'ar' ? 'من نحن' : 'À propos' },
-                                { href: '/plats', label: language === 'ar' ? 'قائمة الطعام' : 'Menu' },
                                 { href: '/services', label: language === 'ar' ? 'خدماتنا' : 'Services' },
                                 { href: '/contact', label: language === 'ar' ? 'اتصل بنا' : 'Contact' },
                             ].map((link) => (
