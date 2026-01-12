@@ -30,7 +30,8 @@ export default function MessagesPage() {
         setLoading(true);
         try {
             const response = await contactAPI.getAll();
-            setMessages(response.data);
+            const messagesData = Array.isArray(response) ? response : (response.data || []);
+            setMessages(messagesData);
         } catch (error) {
             console.error('Error fetching messages:', error);
         } finally {

@@ -16,7 +16,9 @@ export default function ReviewsPage() {
         setLoading(true);
         try {
             const res = await reviewsAPI.getAllAdmin();
-            setReviews(res.data || []);
+            // التعامل مع البيانات سواء كانت مصفوفة مباشرة أو مغلفة في data
+            const reviewsData = Array.isArray(res) ? res : (res.data || []);
+            setReviews(reviewsData);
         } catch (error) {
             console.error('Error fetching reviews:', error);
         } finally {
