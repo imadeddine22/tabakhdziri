@@ -48,7 +48,10 @@ export default function ReviewsPage() {
         }
     };
 
-    const filteredReviews = reviews.filter(r => filter === 'all' || r.status === filter);
+    // التأكد من أن reviews مصفوفة قبل التصفية
+    const filteredReviews = Array.isArray(reviews)
+        ? reviews.filter(r => r && (filter === 'all' || r.status === filter))
+        : [];
 
     const getStatusBadge = (status: string) => {
         switch (status) {
