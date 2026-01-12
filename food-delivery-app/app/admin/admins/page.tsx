@@ -55,7 +55,8 @@ export default function AdminManagementPage() {
         try {
             setLoading(true);
             const response = await adminAPI.getAllAdmins();
-            setAdmins(response);
+            const adminsData = Array.isArray(response) ? response : (response.data || []);
+            setAdmins(adminsData);
         } catch (error) {
             console.error('Error fetching admins:', error);
         } finally {

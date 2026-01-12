@@ -23,8 +23,13 @@ export default function ProductsPage() {
                 productsAPI.getAll(),
                 categoriesAPI.getAll()
             ]);
-            setProducts(prodRes.data);
-            setCategories(catRes.data);
+
+            // التعامل مع البيانات سواء كانت مصفوفة مباشرة أو داخل .data
+            const productsList = Array.isArray(prodRes) ? prodRes : (prodRes.data || []);
+            const categoriesList = Array.isArray(catRes) ? catRes : (catRes.data || []);
+
+            setProducts(productsList);
+            setCategories(categoriesList);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -99,10 +104,14 @@ export default function ProductsPage() {
         }
     };
 
-    const filteredProducts = products.filter(p =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.category?.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredProducts = Array.isArray(products)
+        ? products.filter(p =>
+            p && (
+                p.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                p.category?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        )
+        : [];
 
     return (
         <AdminRoute>

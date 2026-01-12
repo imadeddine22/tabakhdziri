@@ -40,10 +40,14 @@ export default function UsersPage() {
         }
     };
 
-    const filteredUsers = users.filter(u =>
-        u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        u.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredUsers = Array.isArray(users)
+        ? users.filter(u =>
+            u && (
+                u.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                u.email?.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        )
+        : [];
 
     return (
         <AdminRoute>

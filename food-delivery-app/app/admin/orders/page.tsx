@@ -71,16 +71,18 @@ export default function AdminOrdersPage() {
         }
     };
 
-    const filteredOrders = orders.filter(order => {
-        const matchesSearch =
-            order.customerInfo?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order.customerInfo?.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            order._id.toLowerCase().includes(searchTerm.toLowerCase());
+    const filteredOrders = Array.isArray(orders)
+        ? orders.filter(order => {
+            const matchesSearch =
+                order.customerInfo?.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                order.customerInfo?.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                order._id.toLowerCase().includes(searchTerm.toLowerCase());
 
-        const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
+            const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
 
-        return matchesSearch && matchesStatus;
-    });
+            return matchesSearch && matchesStatus;
+        })
+        : [];
 
     return (
         <AdminRoute>
