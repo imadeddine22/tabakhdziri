@@ -3,9 +3,11 @@
 import { useRef } from 'react';
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/imageHelper';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function CategoryFilter({ categories, selectedCategory, onSelectCategory }) {
     const scrollRef = useRef(null);
+    const { t } = useLanguage();
 
     const scroll = (direction) => {
         if (scrollRef.current) {
@@ -69,7 +71,7 @@ export default function CategoryFilter({ categories, selectedCategory, onSelectC
                                 ? 'text-[var(--primary-orange)]'
                                 : 'text-gray-700 group-hover:text-[var(--primary-orange)]'
                                 }`}>
-                                الكل
+                                {t('categories.all')}
                             </span>
                         </button>
 
