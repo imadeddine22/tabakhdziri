@@ -72,11 +72,15 @@ export default function MessagesPage() {
         }
     };
 
-    const filteredMessages = messages.filter(m =>
-        m.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        m.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        m.subject?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredMessages = Array.isArray(messages)
+        ? messages.filter(m =>
+            m && (
+                m.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                m.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                m.subject?.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        )
+        : [];
 
     const getStatusColor = (status: string) => {
         switch (status) {
