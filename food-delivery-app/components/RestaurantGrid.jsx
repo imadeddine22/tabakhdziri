@@ -24,7 +24,8 @@ export default function RestaurantGrid({ dishes }) {
                         {t('products.ourDishes')} <span className="text-gray-500">({dishes.length})</span>
                     </h2>
 
-                    <div className="flex items-center gap-4">
+                    {/* الأزرار - تظهر فقط على الشاشات الكبيرة */}
+                    <div className="hidden md:flex items-center gap-4">
                         {/* Filter Button */}
                         <button
                             onClick={handleFilterClick}
