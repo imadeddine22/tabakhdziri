@@ -22,6 +22,8 @@ export default function Home() {
   const [featuredDishes, setFeaturedDishes] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState('جاري تحميل البيانات...');
 
   // Ref for scrolling to results
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -30,12 +32,23 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
+        setIsLoading(true);
+        setLoadingMessage('جاري الاتصال بالخادم...');
+
         console.log('🚀 Starting data fetch...');
+
+        // Add a timeout to show "waking up server" message
+        const wakeupTimer = setTimeout(() => {
+          setLoadingMessage('جاري تشغيل الخادم... قد يستغرق هذا دقيقة');
+        }, 5000);
+
         const [dishesData, categoriesData, featuredData] = await Promise.all([
           getDishes(),
           getCategories(),
           productsAPI.getFeatured()
         ]);
+
+        clearTimeout(wakeupTimer);
 
         console.log('✅ Data fetched successfully!');
         console.log('  📦 Dishes:', dishesData?.length || 0, dishesData);
@@ -51,6 +64,9 @@ export default function Home() {
         console.log('✅ State updated!');
       } catch (error) {
         console.error('❌ Error fetching data:', error);
+        setLoadingMessage('حدث خطأ في تحميل البيانات');
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -111,6 +127,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white transition-colors duration-300">
+      {isLoading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-xl font-semibold text-gray-800 mb-2">{loadingMessage}</p>
+            <p className="text-sm text-gray-600">الخادم المجاني قد يستغرق وقتاً للتشغيل</p>
+          </div>
+        </div>
+      )}
       <Hero onSearch={handleSearch} />
       <FeaturedSection dishes={featuredDishes} />
       <CategoryFilter

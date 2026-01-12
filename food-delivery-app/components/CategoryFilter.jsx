@@ -46,6 +46,34 @@ export default function CategoryFilter({ categories, selectedCategory, onSelectC
                         className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                     >
+                        {/* "All" Button */}
+                        <button
+                            onClick={() => onSelectCategory(null)}
+                            className={`flex-shrink-0 flex flex-col items-center gap-2 group transition-all ${selectedCategory === null ? 'scale-110' : ''
+                                }`}
+                        >
+                            <div className={`relative w-20 h-20 rounded-full overflow-hidden border-4 transition-all flex items-center justify-center ${selectedCategory === null
+                                ? 'border-[var(--primary-orange)] shadow-lg bg-gradient-to-br from-orange-400 to-orange-600'
+                                : 'border-white group-hover:border-gray-200 bg-gradient-to-br from-gray-100 to-gray-200'
+                                }`}>
+                                <svg
+                                    className={`w-10 h-10 transition-colors ${selectedCategory === null ? 'text-white' : 'text-gray-600 group-hover:text-[var(--primary-orange)]'}`}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                </svg>
+                            </div>
+                            <span className={`text-sm font-medium transition-colors ${selectedCategory === null
+                                ? 'text-[var(--primary-orange)]'
+                                : 'text-gray-700 group-hover:text-[var(--primary-orange)]'
+                                }`}>
+                                الكل
+                            </span>
+                        </button>
+
+                        {/* Category Buttons */}
                         {categories.map((category) => (
                             <button
                                 key={category._id || category.id}

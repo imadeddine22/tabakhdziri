@@ -4,10 +4,32 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://tabakhdziriback.onre
 
 console.log('🔗 API URL:', API_URL);
 
+// Retry helper function for failed requests
+const retryRequest = async (fn, retries = 3, delay = 1000) => {
+    for (let i = 0; i < retries; i++) {
+        try {
+            return await fn();
+        } catch (error) {
+            const isLastAttempt = i === retries - 1;
+            const isRetryable = error.code === 'ECONNABORTED' ||
+                error.code === 'ERR_NETWORK' ||
+                error.response?.status >= 500;
+
+            if (isLastAttempt || !isRetryable) {
+                throw error;
+            }
+
+            console.log(`⚠️ محاولة ${i + 1} فشلت، إعادة المحاولة بعد ${delay}ms...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            delay *= 2; // Exponential backoff
+        }
+    }
+};
+
 // Create axios instance
 const api = axios.create({
     baseURL: API_URL,
-    timeout: 10000,
+    timeout: 60000, // 60 seconds for Render cold starts
     headers: {
         'Content-Type': 'application/json'
     }
@@ -89,8 +111,10 @@ export const authAPI = {
 // Products API
 export const productsAPI = {
     getAll: async (params) => {
-        const response = await api.get('/products', { params });
-        return response.data.data || response.data;
+        return retryRequest(async () => {
+            const response = await api.get('/products', { params });
+            return response.data.data || response.data;
+        });
     },
     getById: async (id) => {
         const response = await api.get(`/products/${id}`);
@@ -125,8 +149,10 @@ export const productsAPI = {
 // Categories API
 export const categoriesAPI = {
     getAll: async () => {
-        const response = await api.get('/categories');
-        return response.data.data || response.data;
+        return retryRequest(async () => {
+            const response = await api.get('/categories');
+            return response.data.data || response.data;
+        });
     },
     getById: async (id) => {
         const response = await api.get(`/categories/${id}`);
