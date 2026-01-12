@@ -3,9 +3,17 @@ import path from 'path';
 import fs from 'fs';
 
 // Ensure uploads directory exists
-const uploadDir = 'public/uploads/';
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+// في Vercel Serverless، نستخدم /tmp directory (مؤقت)
+const uploadDir = process.env.VERCEL === '1' ? '/tmp/uploads/' : 'public/uploads/';
+
+// إنشاء المجلد فقط إذا لم يكن موجوداً
+try {
+    if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+    }
+} catch (error) {
+    console.warn('⚠️ Could not create upload directory:', error.message);
+    // في Vercel، هذا متوقع - نتجاهل الخطأ
 }
 
 // Set storage engine
@@ -44,3 +52,4 @@ const upload = multer({
 });
 
 export default upload;
+
