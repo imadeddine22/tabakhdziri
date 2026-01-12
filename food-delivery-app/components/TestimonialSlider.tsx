@@ -13,14 +13,21 @@ export default function TestimonialSlider({ initialTestimonials, language }: { i
     useEffect(() => {
         const fetchReviews = async () => {
             try {
+                console.log('🔄 Fetching approved reviews...');
                 const res = await reviewsAPI.getApproved();
-                if (res.data && res.data.length > 0) {
-                    setReviews(res.data);
+                console.log('📦 Reviews response:', res);
+
+                // reviewsAPI.getApproved() already unwraps the data
+                // So res is directly the array of reviews
+                if (Array.isArray(res) && res.length > 0) {
+                    console.log('✅ Found', res.length, 'approved reviews');
+                    setReviews(res);
                 } else {
+                    console.log('⚠️ No approved reviews, using fallback');
                     setReviews(initialTestimonials); // Fallback to provided hardcoded ones
                 }
             } catch (error) {
-                console.error('Error fetching reviews:', error);
+                console.error('❌ Error fetching reviews:', error);
                 setReviews(initialTestimonials);
             } finally {
                 setLoading(false);
