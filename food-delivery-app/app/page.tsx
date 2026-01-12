@@ -24,7 +24,6 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [loadingMessage, setLoadingMessage] = useState('جاري تحميل البيانات...');
 
   // Ref for scrolling to results
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -34,22 +33,14 @@ export default function Home() {
     async function fetchData() {
       try {
         setIsLoading(true);
-        setLoadingMessage('جاري الاتصال بالخادم...');
 
         console.log('🚀 Starting data fetch...');
-
-        // Add a timeout to show "waking up server" message
-        const wakeupTimer = setTimeout(() => {
-          setLoadingMessage('جاري تشغيل الخادم... قد يستغرق هذا دقيقة');
-        }, 5000);
 
         const [dishesData, categoriesData, featuredData] = await Promise.all([
           getDishes(),
           getCategories(),
           productsAPI.getFeatured()
         ]);
-
-        clearTimeout(wakeupTimer);
 
         console.log('✅ Data fetched successfully!');
         console.log('  📦 Dishes:', dishesData?.length || 0, dishesData);
@@ -65,7 +56,6 @@ export default function Home() {
         console.log('✅ State updated!');
       } catch (error) {
         console.error('❌ Error fetching data:', error);
-        setLoadingMessage('حدث خطأ في تحميل البيانات');
       } finally {
         setIsLoading(false);
       }
@@ -140,8 +130,7 @@ export default function Home() {
                 priority
               />
             </div>
-            <p className="text-xl font-semibold text-gray-800 mb-2">{loadingMessage}</p>
-            <p className="text-sm text-gray-600">الخادم المجاني قد يستغرق وقتاً للتشغيل</p>
+            <p className="text-2xl font-semibold text-gray-800">Loading...</p>
           </div>
         </div>
       )}
