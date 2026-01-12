@@ -173,16 +173,32 @@ export default function Header() {
                 {mobileMenuOpen && (
                     <div className="md:hidden py-4 border-t border-gray-200 bg-white">
                         <nav className="flex flex-col space-y-4">
-                            <Link href="/" className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50">
+                            <Link
+                                href="/"
+                                className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
                                 {t('common.home')}
                             </Link>
-                            <Link href="/about" className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50">
+                            <Link
+                                href="/about"
+                                className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
                                 {t('common.about')}
                             </Link>
-                            <Link href="/services" className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50">
+                            <Link
+                                href="/services"
+                                className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
                                 {t('common.services')}
                             </Link>
-                            <Link href="/contact" className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50">
+                            <Link
+                                href="/contact"
+                                className="text-gray-700 hover:text-[var(--primary-orange)] transition-colors font-medium px-2 py-1 rounded hover:bg-gray-50"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
                                 {t('common.contact')}
                             </Link>
 
