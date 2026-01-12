@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '@/components/Hero';
@@ -130,7 +131,15 @@ export default function Home() {
       {isLoading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+            <div className="relative w-32 h-32 mx-auto mb-6 animate-pulse">
+              <Image
+                src="/logo.png"
+                alt="Tabakh Dziri Logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
             <p className="text-xl font-semibold text-gray-800 mb-2">{loadingMessage}</p>
             <p className="text-sm text-gray-600">الخادم المجاني قد يستغرق وقتاً للتشغيل</p>
           </div>
