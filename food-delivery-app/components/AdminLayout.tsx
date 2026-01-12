@@ -212,8 +212,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                                         {/* Dropdown Content */}
                                         <div className={`absolute ${isRTL ? 'left-0' : 'right-0'} mt-2 w-48 rounded-xl shadow-lg z-50 border ${isDarkMode
-                                                ? 'bg-gray-800 border-gray-700'
-                                                : 'bg-white border-gray-200'
+                                            ? 'bg-gray-800 border-gray-700'
+                                            : 'bg-white border-gray-200'
                                             }`}>
                                             <div className="py-2">
                                                 <button

@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import ImageGallery from '@/components/ImageGallery';
 import StarRating from '@/components/StarRating';
 import { productsAPI } from '@/lib/api';
@@ -86,28 +84,22 @@ export default function ProductPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-white">
-                <Header />
-                <div className="flex items-center justify-center h-96">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
-                </div>
+            <div className="flex items-center justify-center h-96">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
             </div>
         );
     }
 
     if (!product) {
         return (
-            <div className="min-h-screen bg-white">
-                <Header />
-                <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-                    <h1 className="text-2xl font-bold text-gray-800 mb-4">{t('products.productNotFound')}</h1>
-                    <button
-                        onClick={() => router.push('/')}
-                        className="text-orange-500 hover:underline"
-                    >
-                        {t('common.backToHome')}
-                    </button>
-                </div>
+            <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+                <h1 className="text-2xl font-bold text-gray-800 mb-4">{t('products.productNotFound')}</h1>
+                <button
+                    onClick={() => router.push('/')}
+                    className="text-orange-500 hover:underline"
+                >
+                    {t('common.backToHome')}
+                </button>
             </div>
         );
     }
@@ -119,8 +111,6 @@ export default function ProductPage() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <Header />
-
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="bg-white rounded-3xl shadow-lg overflow-hidden">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
@@ -286,8 +276,6 @@ export default function ProductPage() {
                     </div>
                 </div>
             </div>
-
-            <Footer />
         </div>
     );
 }
