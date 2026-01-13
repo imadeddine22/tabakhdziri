@@ -1,6 +1,14 @@
 import axios from 'axios';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://tabakhdziriback.onrender.com/api';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://tabakhdziriback.onrender.com';
+
+// Helper function to get full image URL
+export const getImageUrl = (imagePath) => {
+    if (!imagePath) return '';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `${BACKEND_URL}${imagePath}`;
+};
 
 console.log('🔗 API URL:', API_URL);
 

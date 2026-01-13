@@ -4,7 +4,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import api from '@/lib/api';
+import api, { getImageUrl } from '@/lib/api';
 
 interface InstagramPost {
     _id: string;
@@ -207,7 +207,7 @@ export default function ServicesPage() {
                     <div className="relative overflow-hidden">
                         <div className="flex gap-6 animate-instagram-scroll" style={{ width: 'max-content' }}>
                             {instagramPosts.map((post) => {
-                                const imageUrl = 'http://localhost:5000' + post.image;
+                                const imageUrl = getImageUrl(post.image);
                                 return (
                                     <a
                                         key={post._id}

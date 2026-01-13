@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import api from '@/lib/api';
+import api, { getImageUrl } from '@/lib/api';
 import Image from 'next/image';
 import { Instagram, Plus, Edit2, Trash2, Eye, EyeOff, Save, X } from 'lucide-react';
 
@@ -108,7 +108,7 @@ export default function InstagramManagementPage() {
             order: post.order,
             isActive: post.isActive
         });
-        setImagePreview(`http://localhost:5000${post.image}`);
+        setImagePreview(getImageUrl(post.image));
         setShowForm(true);
     };
 
@@ -300,7 +300,7 @@ export default function InstagramManagementPage() {
                             {/* Image */}
                             <div className="relative h-64 bg-gray-200">
                                 <Image
-                                    src={`http://localhost:5000${post.image}`}
+                                    src={getImageUrl(post.image)}
                                     alt="Instagram Post"
                                     fill
                                     className="object-cover"
