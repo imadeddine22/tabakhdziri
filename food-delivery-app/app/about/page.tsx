@@ -10,7 +10,6 @@ import TestimonialSlider from '@/components/TestimonialSlider';
 export default function AboutPage() {
     const { t, language } = useLanguage();
     const [currentTestimonial, setCurrentTestimonial] = useState(0); // Kept for legacy if needed, but TestimonialSlider handles its own state
-    const [currentChef, setCurrentChef] = useState(0);
 
     const features = [
         {
@@ -72,36 +71,7 @@ export default function AboutPage() {
         }
     ];
 
-    const chefs = [
-        {
-            nameFr: 'Chef Karim Benali',
-            nameAr: 'الشيف كريم بن علي',
-            titleFr: 'Chef Principal',
-            titleAr: 'الطاهي الرئيسي',
-            image: 'https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=400&h=500&fit=crop'
-        },
-        {
-            nameFr: 'Chef Yasmine Hadj',
-            nameAr: 'الشيفة ياسمين حاج',
-            titleFr: 'Chef Pâtissière',
-            titleAr: 'طاهية الحلويات',
-            image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400&h=500&fit=crop'
-        },
-        {
-            nameFr: 'Chef Mehdi Larbi',
-            nameAr: 'الشيف مهدي العربي',
-            titleFr: 'Chef de Cuisine',
-            titleAr: 'رئيس الطهاة',
-            image: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=400&h=500&fit=crop'
-        },
-        {
-            nameFr: 'Chef Amina Meziane',
-            nameAr: 'الشيفة أمينة مزيان',
-            titleFr: 'Chef Spécialiste',
-            titleAr: 'طاهية متخصصة',
-            image: 'https://images.unsplash.com/photo-1595273670150-bd0c3c392e46?w=400&h=500&fit=crop'
-        }
-    ];
+
 
     // Auto-rotate testimonials
     useEffect(() => {
@@ -260,109 +230,6 @@ export default function AboutPage() {
                 </div>
             </div>
 
-            {/* Our Chefs Section */}
-            <div className="bg-white py-20 relative overflow-hidden">
-                {/* Background decorative elements */}
-                <div className="absolute inset-0 opacity-5">
-                    <div className="absolute top-20 left-20 text-9xl">👨‍🍳</div>
-                    <div className="absolute bottom-20 right-20 text-9xl">🔪</div>
-                </div>
-
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                    <h2 className="text-4xl font-bold text-gray-800 mb-12 text-center">
-                        {language === 'ar' ? 'طهاتنا وموظفونا' : 'Nos chefs et notre personnel'}
-                    </h2>
-
-                    {/* Chefs Carousel */}
-                    <div className="relative">
-                        <div className="flex gap-6 overflow-hidden">
-                            {/* Show 3 chefs at a time on desktop, 1 on mobile */}
-                            <div className="hidden md:grid md:grid-cols-3 gap-6 w-full">
-                                {[0, 1, 2].map((offset) => {
-                                    const index = (currentChef + offset) % chefs.length;
-                                    const chef = chefs[index];
-                                    return (
-                                        <div key={index} className="relative group">
-                                            <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
-                                                <Image
-                                                    src={chef.image}
-                                                    alt={language === 'ar' ? chef.nameAr : chef.nameFr}
-                                                    fill
-                                                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                                                />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                                                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                                                    <h3 className="text-2xl font-bold mb-1">
-                                                        {language === 'ar' ? chef.nameAr : chef.nameFr}
-                                                    </h3>
-                                                    <p className="text-gray-300">
-                                                        {language === 'ar' ? chef.titleAr : chef.titleFr}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-
-                            {/* Mobile view - single chef */}
-                            <div className="md:hidden w-full">
-                                <div className="relative group">
-                                    <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
-                                        <Image
-                                            src={chefs[currentChef].image}
-                                            alt={language === 'ar' ? chefs[currentChef].nameAr : chefs[currentChef].nameFr}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                                            <h3 className="text-2xl font-bold mb-1">
-                                                {language === 'ar' ? chefs[currentChef].nameAr : chefs[currentChef].nameFr}
-                                            </h3>
-                                            <p className="text-gray-300">
-                                                {language === 'ar' ? chefs[currentChef].titleAr : chefs[currentChef].titleFr}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Navigation Arrows */}
-                        <button
-                            onClick={() => setCurrentChef((prev) => (prev - 1 + chefs.length) % chefs.length)}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-colors z-10"
-                        >
-                            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-                        <button
-                            onClick={() => setCurrentChef((prev) => (prev + 1) % chefs.length)}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-colors z-10"
-                        >
-                            <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-
-                        {/* Dots Navigation */}
-                        <div className="flex justify-center gap-2 mt-8">
-                            {chefs.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => setCurrentChef(index)}
-                                    className={`w-3 h-3 rounded-full transition-all ${index === currentChef
-                                        ? 'bg-[#FF8C42] w-8'
-                                        : 'bg-gray-400'
-                                        }`}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             {/* Scroll to Top Button */}
             <button
