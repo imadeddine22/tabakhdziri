@@ -1,7 +1,15 @@
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://tabakhdziriback.onrender.com/api';
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://tabakhdziriback.onrender.com';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
+// Validation - ensure environment variables are set
+if (!API_URL || !BACKEND_URL) {
+    console.error('❌ Missing required environment variables:');
+    if (!API_URL) console.error('  - NEXT_PUBLIC_API_URL is not defined');
+    if (!BACKEND_URL) console.error('  - NEXT_PUBLIC_BACKEND_URL is not defined');
+    console.error('💡 Please check your .env.local file');
+}
 
 // Helper function to get full image URL
 export const getImageUrl = (imagePath) => {
@@ -11,6 +19,7 @@ export const getImageUrl = (imagePath) => {
 };
 
 console.log('🔗 API URL:', API_URL);
+console.log('🔗 Backend URL:', BACKEND_URL);
 
 // Retry helper function for failed requests
 const retryRequest = async (fn, retries = 3, delay = 1000) => {

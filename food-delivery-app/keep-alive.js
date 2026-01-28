@@ -7,15 +7,25 @@
  * Run this on your local machine or use a free cron service like cron-job.org
  * 
  * Usage:
- *   node keep-alive.js
+ *   BACKEND_URL=https://api.tabakhedjazayri.com node keep-alive.js
  * 
  * Or add to package.json:
  *   "scripts": {
- *     "keep-alive": "node keep-alive.js"
+ *     "keep-alive": "BACKEND_URL=https://api.tabakhedjazayri.com node keep-alive.js"
  *   }
  */
 
-const BACKEND_URL = process.env.BACKEND_URL || 'https://tabakhdziriback.onrender.com';
+// Note: This script runs in Node.js, not Next.js
+// So we use BACKEND_URL (without NEXT_PUBLIC_ prefix)
+const BACKEND_URL = process.env.BACKEND_URL;
+
+// Validation
+if (!BACKEND_URL) {
+    console.error('❌ BACKEND_URL environment variable is not set');
+    console.error('💡 Usage: BACKEND_URL=https://api.tabakhedjazayri.com node keep-alive.js');
+    process.exit(1);
+}
+
 const PING_INTERVAL = 10 * 60 * 1000; // 10 minutes in milliseconds
 
 console.log('🔔 Keep-Alive Script Started');
