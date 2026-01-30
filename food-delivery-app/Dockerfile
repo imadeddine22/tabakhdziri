@@ -8,7 +8,8 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-RUN npm ci
+# Install all dependencies including devDependencies for build
+RUN npm install
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -17,6 +18,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Build the application
+ENV NODE_ENV=production
 RUN npm run build
 
 # Production image, copy all the files and run next
