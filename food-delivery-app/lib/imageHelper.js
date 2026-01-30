@@ -9,12 +9,7 @@ export const getImageUrl = (path) => {
         return '/images/placeholder.png';
     }
 
-    // إذا كان الرابط يحتوي على localhost، استبدله بالـ backend URL
-    if (path.includes('localhost:5000')) {
-        return path.replace('http://localhost:5000', backendUrl);
-    }
-
-    // If it's already a full URL (http/https), return it
+    // If it's already a full URL (http/https), return it as-is
     if (path.startsWith('http')) {
         return path;
     }

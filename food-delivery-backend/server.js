@@ -34,16 +34,24 @@ app.use(cors({
   origin: function (origin, callback) {
     console.log('📡 CORS Request from origin:', origin);
     console.log('📡 NODE_ENV:', process.env.NODE_ENV);
+    console.log('📡 FRONTEND_URL:', process.env.FRONTEND_URL);
 
     // في وضع التطوير، اقبل جميع المصادر
     if (process.env.NODE_ENV !== 'production') {
       callback(null, true);
     } else {
       // في وضع الإنتاج، تحقق من المصدر
-      const allowedOrigins = [process.env.FRONTEND_URL || 'http://localhost:3000'];
+      const allowedOrigins = [
+        process.env.FRONTEND_URL,
+        'https://tabakhedjazayri.com',
+        'https://www.tabakhedjazayri.com'
+      ].filter(Boolean); // Remove undefined values
+
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.error('❌ CORS blocked origin:', origin);
+        console.error('   Allowed origins:', allowedOrigins);
         callback(new Error('Not allowed by CORS'));
       }
     }

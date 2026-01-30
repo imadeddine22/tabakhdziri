@@ -1,0 +1,19 @@
+# robots.txt for Tabakh Dziri
+# https://tabakhdziri.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://tabakhdziri.com/sitemap.xml
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /api/
+
+# Allow all other pages
+Allow: /
+Allow: /services
+Allow: /about
+Allow: /contact
+Allow: /menu

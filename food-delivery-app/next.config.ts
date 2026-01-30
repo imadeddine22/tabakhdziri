@@ -11,9 +11,15 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '5000',
+        protocol: 'https',
+        hostname: 'api.tabakhedjazayri.com',
+        port: '',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'tabakhedjazayri.com',
+        port: '',
         pathname: '/uploads/**',
       },
     ],

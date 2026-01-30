@@ -3,12 +3,22 @@ import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Tabakh dziri - Traiteur Professionnel en Algérie",
-  description: "Traiteur professionnel pour vos mariages et événements spéciaux en Algérie. Découvrez nos plats traditionnels et modernes.",
-  keywords: ["traiteur algérie", "mariage algérie", "événements", "cuisine algérienne", "tabakh dziri", "catering"],
+  title: "Tabakh Dziri - طباخ جزايري | Traiteur Professionnel en Algérie",
+  description: "Tabakh Dziri - طباخ جزايري: Traiteur professionnel pour vos mariages, événements et fêtes en Algérie. Cuisine algérienne traditionnelle et moderne. Livraison disponible.",
+  keywords: [
+    "tabakh dziri", "طباخ جزايري", "tabakh djazayri", "tabakhedjazayri",
+    "traiteur algérie", "traiteur alger", "mariage algérie",
+    "événements algérie", "cuisine algérienne", "plats algériens",
+    "catering algérie", "livraison repas", "couscous", "tajine",
+    "food delivery algeria", "restaurant algérien"
+  ],
   authors: [{ name: "Tabakh Dziri" }],
   creator: "Tabakh Dziri",
   publisher: "Tabakh Dziri",
+  metadataBase: new URL('https://tabakhdziri.com'),
+  alternates: {
+    canonical: 'https://tabakhdziri.com',
+  },
 
   // Favicons and App Icons
   icons: {
@@ -36,10 +46,10 @@ export const metadata: Metadata = {
 
   // Open Graph (Facebook, LinkedIn, etc.)
   openGraph: {
-    title: "Tabakh dziri - Traiteur Professionnel en Algérie",
-    description: "Traiteur professionnel pour vos mariages et événements spéciaux en Algérie. Découvrez nos plats traditionnels et modernes.",
-    url: "https://tabakh-dziri.com",
-    siteName: "Tabakh dziri",
+    title: "Tabakh Dziri - طباخ جزايري | Traiteur Professionnel",
+    description: "Tabakh Dziri - طباخ جزايري: Traiteur professionnel pour vos mariages, événements et fêtes en Algérie. Cuisine algérienne traditionnelle et moderne.",
+    url: "https://tabakhdziri.com",
+    siteName: "Tabakh Dziri",
     images: [
       {
         url: "/logo.png",
@@ -55,8 +65,8 @@ export const metadata: Metadata = {
   // Twitter Card
   twitter: {
     card: "summary_large_image",
-    title: "Tabakh dziri - Traiteur Professionnel en Algérie",
-    description: "Traiteur professionnel pour vos mariages et événements spéciaux en Algérie.",
+    title: "Tabakh Dziri - طباخ جزايري | Traiteur Professionnel",
+    description: "Tabakh Dziri - طباخ جزايري: Traiteur professionnel en Algérie. Cuisine algérienne traditionnelle et moderne.",
     images: ["/logo.png"],
     creator: "@tabakhdziri",
   },
@@ -94,14 +104,25 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Tabakh dziri",
-              url: "https://tabakh-dziri.com",
-              logo: "https://tabakh-dziri.com/logo.png",
+              "@type": "FoodEstablishment",
+              name: "Tabakh Dziri - طباخ جزايري",
+              alternateName: "Tabakh Djazayri",
+              url: "https://tabakhdziri.com",
+              logo: "https://tabakhdziri.com/logo.png",
+              image: "https://tabakhdziri.com/logo.png",
+              description: "Traiteur professionnel pour mariages et événements en Algérie",
+              servesCuisine: "Algerian",
+              priceRange: "$$",
               contactPoint: {
                 "@type": "ContactPoint",
-                telephone: "+213-555-555-555",
-                contactType: "customer service"
+                telephone: "+213560604172",
+                contactType: "customer service",
+                availableLanguage: ["French", "Arabic"]
+              },
+              address: {
+                "@type": "PostalAddress",
+                addressCountry: "DZ",
+                addressLocality: "Algérie"
               }
             }),
           }}

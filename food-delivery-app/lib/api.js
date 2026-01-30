@@ -321,6 +321,43 @@ export const reviewsAPI = {
     }
 };
 
+// Instagram API
+export const instagramAPI = {
+    getAll: async () => {
+        const response = await api.get('/instagram');
+        return response.data.data || response.data;
+    },
+    getAllAdmin: async () => {
+        const response = await api.get('/instagram/admin/all');
+        return response.data.data || response.data;
+    },
+    getById: async (id) => {
+        const response = await api.get(`/instagram/${id}`);
+        return response.data.data || response.data;
+    },
+    create: async (formData) => {
+        const response = await api.post('/instagram', formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        return response.data.data || response.data;
+    },
+    update: async (id, formData) => {
+        const response = await api.put(`/instagram/${id}`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        return response.data.data || response.data;
+    },
+    toggleStatus: async (id) => {
+        const response = await api.patch(`/instagram/${id}/toggle`);
+        return response.data.data || response.data;
+    },
+    delete: async (id) => {
+        const response = await api.delete(`/instagram/${id}`);
+        return response.data.data || response.data;
+    }
+};
+
+
 // Auth Helpers
 export const isAuthenticated = () => {
     if (typeof window !== 'undefined') {
