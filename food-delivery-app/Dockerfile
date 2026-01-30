@@ -9,7 +9,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 # Install all dependencies including devDependencies for build
-RUN npm install
+# Force install devDependencies even if NODE_ENV=production
+RUN npm install --include=dev
 
 # Rebuild the source code only when needed
 FROM base AS builder
