@@ -9,10 +9,10 @@ import { ordersAPI, isAuthenticated } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 
 interface CartItem {
-    id: string;
+    id: string | number;
     name: string;
     price: number;
-    image: string;
+    image?: string;
     description?: string;
     quantity: number;
     type?: string;
@@ -129,11 +129,11 @@ export default function CartPage() {
                     phone: customerPhone
                 },
                 items: cart.map((item: CartItem) => ({
-                    dishId: item.id,
+                    dishId: String(item.id),
                     name: item.name,
                     quantity: item.quantity,
                     price: item.price,
-                    image: item.image
+                    image: item.image || ''
                 })),
                 eventDetails: {
                     eventType: eventType === 'Autre' ? `Autre: ${customEventType}` : eventType,
@@ -238,7 +238,7 @@ export default function CartPage() {
                                             <div className="flex gap-3 sm:gap-4 mb-4">
                                                 <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-gray-200 rounded-lg overflow-hidden">
                                                     <Image
-                                                        src={item.image}
+                                                        src={item.image || '/images/placeholder.png'}
                                                         alt={item.name}
                                                         fill
                                                         className="object-cover"
@@ -281,7 +281,7 @@ export default function CartPage() {
                                                         type="number"
                                                         min="1"
                                                         value={item.quantity}
-                                                        onChange={(e) => handleQuantityInputChange(item.id, e.target.value)}
+                                                        onChange={(e) => handleQuantityInputChange(String(item.id), e.target.value)}
                                                         onBlur={(e) => {
                                                             if (!e.target.value || parseInt(e.target.value) < 1) {
                                                                 updateQuantity(item.id, 1);
