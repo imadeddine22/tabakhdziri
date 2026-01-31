@@ -18,7 +18,7 @@ export default function ReviewForm({ onReviewSubmitted }: { onReviewSubmitted?: 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!isAuthenticated && !name.trim()) {
+        if (!isAuthenticated() && !name.trim()) {
             setMessage({ type: 'error', text: 'Veuillez entrer votre nom.' });
             return;
         }
@@ -35,7 +35,7 @@ export default function ReviewForm({ onReviewSubmitted }: { onReviewSubmitted?: 
             await reviewsAPI.create({
                 rating,
                 comment,
-                name: isAuthenticated ? user?.name : name
+                name: isAuthenticated() ? user?.name : name
             });
             setMessage({ type: 'success', text: 'Merci ! Votre avis a été envoyé et sera visible après validation.' });
             setComment('');
@@ -49,7 +49,7 @@ export default function ReviewForm({ onReviewSubmitted }: { onReviewSubmitted?: 
         }
     };
 
-    if (!isAuthenticated) {
+    if (!isAuthenticated()) {
         return (
             <div className="bg-gray-50 rounded-2xl p-8 text-center">
                 <p className="text-gray-600 mb-4">Veuillez vous connecter pour laisser un avis.</p>
@@ -95,7 +95,7 @@ export default function ReviewForm({ onReviewSubmitted }: { onReviewSubmitted?: 
                     </div>
                 </div>
 
-                {!isAuthenticated && (
+                {!isAuthenticated() && (
                     <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">Votre nom</label>
                         <input
