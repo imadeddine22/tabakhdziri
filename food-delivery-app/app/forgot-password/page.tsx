@@ -18,15 +18,29 @@ export default function ForgotPasswordPage() {
         setSuccess(false);
 
         try {
-            // TODO: Implement actual password reset API call
-            // For now, we'll simulate a successful request
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/forgot-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Failed to send reset code');
+            }
 
             setSuccess(true);
-            setEmail('');
+
+            // Redirect to reset password page after 2 seconds
+            setTimeout(() => {
+                window.location.href = `/reset-password?email=${encodeURIComponent(email)}`;
+            }, 2000);
         } catch (err: any) {
             console.error('Password reset error:', err);
-            setError(err.response?.data?.message || 'Une erreur est survenue. Veuillez réessayer.');
+            setError(err.message || 'Une erreur est survenue. Veuillez réessayer.');
         } finally {
             setLoading(false);
         }

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import { sendWelcomeEmail } from '../utils/emailService.js';
+import { sendWelcomeEmail, sendPasswordResetEmail } from '../utils/emailService.js';
 
 // Generate JWT token
 const generateToken = (id) => {
@@ -162,6 +162,173 @@ export const getMe = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Error fetching user data',
+            error: error.message
+        });
+    }
+};
+
+// @desc    Request password reset
+// @route   POST /api/auth/forgot-password
+// @access  Public
+export const forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide an email address'
+            });
+        }
+
+        // Find user
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: 'No user found with this email address'
+            });
+        }
+
+        // Generate reset token
+        const resetToken = user.generateResetToken();
+        await user.save({ validateBeforeSave: false });
+
+        // Send email
+        try {
+            await sendPasswordResetEmail(user.email, user.name, resetToken);
+
+            res.status(200).json({
+                success: true,
+                message: 'Password reset code sent to your email'
+            });
+        } catch (emailError) {
+            // If email fails, clear the reset token
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false });
+
+            return res.status(500).json({
+                success: false,
+                message: 'Error sending email. Please try again later.'
+            });
+        }
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error processing request',
+            error: error.message
+        });
+    }
+};
+
+// @desc    Verify reset token
+// @route   POST /api/auth/verify-reset-token
+// @access  Public
+export const verifyResetToken = async (req, res) => {
+    try {
+        const { email, token } = req.body;
+
+        if (!email || !token) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide email and verification code'
+            });
+        }
+
+        // Find user with valid token
+        const user = await User.findOne({
+            email,
+            resetPasswordToken: token,
+            resetPasswordExpire: { $gt: Date.now() }
+        }).select('+resetPasswordToken +resetPasswordExpire');
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid or expired verification code'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Verification code is valid'
+        });
+    } catch (error) {
+        console.error('Verify reset token error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error verifying code',
+            error: error.message
+        });
+    }
+};
+
+// @desc    Reset password
+// @route   POST /api/auth/reset-password
+// @access  Public
+export const resetPassword = async (req, res) => {
+    try {
+        const { email, token, newPassword } = req.body;
+
+        if (!email || !token || !newPassword) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please provide email, verification code, and new password'
+            });
+        }
+
+        if (newPassword.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: 'Password must be at least 6 characters'
+            });
+        }
+
+        // Find user with valid token
+        const user = await User.findOne({
+            email,
+            resetPasswordToken: token,
+            resetPasswordExpire: { $gt: Date.now() }
+        }).select('+resetPasswordToken +resetPasswordExpire');
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid or expired verification code'
+            });
+        }
+
+        // Set new password
+        user.password = newPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+        await user.save();
+
+        // Generate new token
+        const authToken = generateToken(user._id);
+
+        res.status(200).json({
+            success: true,
+            message: 'Password reset successful',
+            data: {
+                user: {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone,
+                    role: user.role
+                },
+                token: authToken
+            }
+        });
+    } catch (error) {
+        console.error('Reset password error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error resetting password',
             error: error.message
         });
     }

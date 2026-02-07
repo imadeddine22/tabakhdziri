@@ -103,3 +103,44 @@ export const sendOrderConfirmationEmail = async (email, name, order) => {
         // Just log it and continue
     }
 };
+
+// Send password reset email
+export const sendPasswordResetEmail = async (email, name, resetToken) => {
+    try {
+        const transporter = createTransporter();
+
+        const mailOptions = {
+            from: process.env.EMAIL_FROM,
+            to: email,
+            subject: 'Réinitialisation de votre mot de passe - Tabakh Dziri',
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                    <h1 style="color: #FF8C42; text-align: center;">Réinitialisation de mot de passe</h1>
+                    <p>Bonjour <strong>${name}</strong>,</p>
+                    <p>Vous avez demandé la réinitialisation de votre mot de passe sur Tabakh Dziri.</p>
+                    
+                    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+                        <p style="margin: 0; font-size: 14px; color: #666;">Votre code de vérification est:</p>
+                        <h2 style="color: #FF8C42; font-size: 36px; margin: 10px 0; letter-spacing: 5px;">${resetToken}</h2>
+                        <p style="margin: 0; font-size: 12px; color: #999;">Ce code expire dans 10 minutes</p>
+                    </div>
+                    
+                    <p>Si vous n'avez pas demandé cette réinitialisation, veuillez ignorer cet email.</p>
+                    <p style="margin-top: 30px;">Cordialement,<br><strong>L'équipe Tabakh Dziri</strong></p>
+                    
+                    <hr style="margin-top: 40px; border: none; border-top: 1px solid #eee;">
+                    <p style="font-size: 12px; color: #666; text-align: center;">
+                        Tabakh Dziri - طباخ جزيري<br>
+                        Pour toute question, contactez-nous à: tabakhdziri@gmail.com
+                    </p>
+                </div>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+        console.log(`✅ Password reset email sent to ${email}`);
+    } catch (error) {
+        console.error('❌ Error sending password reset email:', error);
+        throw error; // Throw error for password reset as it's critical
+    }
+};

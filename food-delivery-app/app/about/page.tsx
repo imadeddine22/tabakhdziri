@@ -147,7 +147,7 @@ export default function AboutPage() {
             </div>
 
             {/* Features Section - After Our Story */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div className="responsive-container py-20">
                 <div className="grid md:grid-cols-3 gap-8">
                     {features.map((feature, index) => (
                         <div key={index} className="group bg-white p-8 rounded-lg text-center hover:shadow-2xl transition-all duration-300 cursor-pointer border-2 border-gray-200 hover:border-[#FF8C42]">
@@ -166,7 +166,7 @@ export default function AboutPage() {
             </div>
 
             {/* Why Choose Tabakh Dziri Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div className="responsive-container py-20">
                 <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
                     <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl order-2 md:order-1">
                         <Image

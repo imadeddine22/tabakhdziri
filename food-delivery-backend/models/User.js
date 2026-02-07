@@ -42,6 +42,14 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    resetPasswordToken: {
+        type: String,
+        select: false
+    },
+    resetPasswordExpire: {
+        type: Date,
+        select: false
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -68,6 +76,18 @@ userSchema.pre('save', async function () {
 // Method to compare passwords
 userSchema.methods.comparePassword = async function (candidatePassword) {
     return await bcrypt.compare(candidatePassword, this.password);
+};
+
+// Method to generate password reset token
+userSchema.methods.generateResetToken = function () {
+    // Generate 6-digit random code
+    const resetToken = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Set token and expiry (10 minutes)
+    this.resetPasswordToken = resetToken;
+    this.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
+
+    return resetToken;
 };
 
 // Method to get user without sensitive data

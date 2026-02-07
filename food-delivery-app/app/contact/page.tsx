@@ -103,7 +103,7 @@ export default function ContactPage() {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div className="responsive-container py-16">
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     {/* Large Circular Food Image */}
                     <div className="relative">

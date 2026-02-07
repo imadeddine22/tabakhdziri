@@ -49,7 +49,7 @@ export default function RestaurantPage() {
         return (
             <div className="min-h-screen bg-white">
                 <Header />
-                <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+                <div className="responsive-container py-16 text-center">
                     <h1 className="text-2xl font-bold text-gray-800 mb-4">Restaurant non trouvé</h1>
                     <a href="/" className="text-[var(--primary-orange)] hover:underline">
                         Retour à l'accueil
@@ -75,7 +75,7 @@ export default function RestaurantPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
 
                 <div className="absolute bottom-0 left-0 right-0 p-8">
-                    <div className="max-w-7xl mx-auto">
+                    <div className="responsive-container">
                         <div className="flex items-end justify-between">
                             <div>
                                 <h1 className="text-4xl font-bold text-white mb-2">{restaurant.name}</h1>
@@ -111,7 +111,7 @@ export default function RestaurantPage() {
 
             {/* Restaurant Info */}
             <div className="bg-gray-50 border-b border-gray-200 py-4">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="responsive-container">
                     <div className="flex items-center gap-8 text-sm text-gray-600">
                         <div>
                             <span className="font-semibold text-gray-800">Commande minimum:</span> {restaurant.minOrder}
@@ -127,7 +127,7 @@ export default function RestaurantPage() {
             </div>
 
             {/* Menu */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="responsive-container py-12">
                 <h2 className="text-3xl font-bold text-gray-800 mb-8">Menu</h2>
 
                 {restaurant.menu && restaurant.menu.length > 0 ? (

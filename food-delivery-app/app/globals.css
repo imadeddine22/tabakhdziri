@@ -225,3 +225,67 @@ html[lang="ar"] .gap-4 {
   background: var(--primary-green-hover);
   transform: scale(1.05);
 }
+
+/* ============================================
+   RESPONSIVE LAYOUT FOR LARGE SCREENS
+   ============================================ */
+
+/* Container with better width management */
+.responsive-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .responsive-container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .responsive-container {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .responsive-container {
+    max-width: 1600px;
+  }
+}
+
+/* Full width sections for large screens */
+.full-width-section {
+  width: 100%;
+  background-color: var(--background);
+}
+
+/* Grid improvements for large screens */
+@media (min-width: 1536px) {
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1920px) {
+  .product-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

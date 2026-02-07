@@ -156,7 +156,7 @@ export default function ServicesPage() {
             </div>
 
             {/* Services Grid */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div className="responsive-container py-20">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {services.map((service) => (
                         <div
@@ -186,7 +186,7 @@ export default function ServicesPage() {
 
             {/* Instagram Gallery Section - Scrolling Marquee */}
             <div className="bg-white py-20 overflow-hidden">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+                <div className="responsive-container mb-8">
                     <h2 className="text-4xl font-bold text-gray-800 text-center mb-4">
                         {language === 'ar' ? 'تابعنا على إنستغرام' : 'Suivez-nous sur Instagram'}
                     </h2>
@@ -237,7 +237,7 @@ export default function ServicesPage() {
 
             {/* Contact Footer Section */}
             <div className="bg-[#0a1628] py-8">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="responsive-container">
                     <div className="bg-[#FF8C42] rounded-2xl px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-6">
                         {/* Address */}
                         <div className="flex items-center gap-4 text-white">
